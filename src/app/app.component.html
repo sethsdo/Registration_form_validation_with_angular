@@ -1,0 +1,92 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+  <div class="container">
+    <div *ngIf="current">
+      <p class="message">Thank you for registering {{ users[0].first_name }} {{ users[0].last_name }}. We sent a conformation email at {{users[0].email}}, and will send mail to {{users[0].street}} {{users[0].city}} {{ users[0].state }}. <br><br> Have a wonderful day</p></div>
+    <div>
+      <form (submit)="onSubmit()" #heroForm="ngForm" novalidate novalidate>
+        <div class="form-group form-inline">
+          <label>*First Name:</label>
+          <input type="text" name="first_name" required minlength="4" maxlength="24" [(ngModel)]="user.first_name" #firstname='ngModel'>
+          <span *ngIf="firstname.errors && (firstname.dirty || firstname.touched)" class="alert">
+            <span class="warn" [hidden]="!firstname.errors.required">First Name is required.</span>
+            <span class="warn" [hidden]="!firstname.errors.minlength">First Name must be at least 4 characters long.</span>
+          </span>
+        </div>
+        <div class="form-group form-inline">
+          <label>*Last Name:</label>
+          <input type="text" name="last_name" required minlength="4" maxlength="24" [(ngModel)]="user.last_name" #lastname='ngModel'>
+          <span *ngIf="lastname.errors && (lastname.dirty || lastname.touched)" class="alert">
+            <span class="warn" [hidden]="!lastname.errors.required">Last Name is required.</span>
+            <span class="warn" [hidden]="!lastname.errors.minlength">Last Name must be at least 4 characters long.</span>
+          </span>
+        </div>
+        <div class="form-group form-inline">
+          <label>*Email:</label>
+          <input type="text" name="email" required minlength="4" pattern="^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]*\.([a-z]{2,4})$" [(ngModel)]='user.email' #email="ngModel">
+          <span *ngIf="email.errors && (email.dirty || email.touched)" class="alert">
+            <span class="warn" [hidden]="!email.errors.required">Email is required.</span>
+            <span class="warn" [hidden]="!email.errors.pattern">Invalid Email.</span>
+          </span>
+        </div>
+        <div class="form-group form-inline">
+          <label for="pwd">*Password:</label>
+          <input type="password" id="password" name="password" required pattern="^([a-zA-Z0-9@*#]{8,24})$" [(ngModel)]="user.password" #password='ngModel'>
+          <span *ngIf="password.errors && (password.dirty || password.touched)" class="alert">
+            <span class="warn" [hidden]="!password.errors.required">Password is required.</span>
+            <span class="warn" [hidden]="!password.errors.pattern">Invalid password.</span>
+          </span>
+        </div>
+        <div class="form-group form-inline">
+          <label>*Password Confirmation:</label>
+          <input type="password" name="confirm" required [(ngModel)]="user.confirm" #confirm='ngModel'>
+          <div *ngIf= "(user.password !== user.confirm) && (confirm.dirty || confirm.touched)" class="alert">
+            <!-- <span class="warn" [hidden]="checkPwd(user.password, user.confirm)"></span> -->
+            <span class="warn" *ngIf="(user.password !== user.confirm)">Password Mismatch!</span>
+          </div>
+        </div>
+        <div class="form-group form-inline">
+          <label>*Street Address:</label>
+          <input type="text" name="street" required minlength="4" maxlength="24" [(ngModel)]='user.street' #street="ngModel">
+          <span *ngIf="street.errors && (street.dirty || street.touched)" class="alert">
+            <span class="warn" [hidden]="!street.errors.required">Street is required.</span>
+            <span class="warn" [hidden]="!street.errors.minlength">Invalid street.</span>
+          </span>
+        </div>
+        <div class="form-group form-inline">
+          <label for="unit_apt">Unit/Apt #:</label>
+          <input type="text" id="unit_apt">
+        </div>
+        <div class="form-group form-inline">
+          <label for="city">*City:</label>
+          <input type="text" name="city" required minlength="2" maxlength="24" [(ngModel)]='user.city' #city="ngModel">
+          <span *ngIf="city.errors && (city.dirty || city.touched)" class="alert">
+            <span class="warn" [hidden]="!city.errors.required">City is required.</span>
+            <span class="warn" [hidden]="!city.errors.minlength">Invalid city.</span>
+          </span>
+        </div>
+        <div class="form-group form-inline">
+          <label for="state">*State:</label>
+          <input type="text" name="state" required minlength="2" maxlength="2" [(ngModel)]='user.state' #state="ngModel">
+          <span *ngIf="state.errors && (state.dirty || state.touched)" class="alert">
+            <span class="warn" [hidden]="!state.errors.required">State is required.</span>
+            <span class="warn" [hidden]="!state.errors.minlength">State must be at least 2 characters long.</span>
+            <span class="warn" [hidden]="!state.errors.maxlength">State must be 2 characters long.</span>
+          </span>
+        </div>
+        <div class="checkbox" >
+           *I'm feeling lucky:
+          <label><input type="radio" [(ngModel)]="user.lucky" #lucky="ngModel" value="yes" name="lucky" required> Yes</label>
+          <label><input type="radio" [(ngModel)]="user.lucky" #lucky="ngModel" value="no" name="lucky" required> No</label>
+          <div class="warn" [hidden]="!(name === null)">Error are you feeling lucky Required</div>
+        </div>
+        <input type="submit" [disabled]="!heroForm.form.valid" class="btn btn-default">
+      </form>
+    </div>
+  </div>
+  
+</div>
+
